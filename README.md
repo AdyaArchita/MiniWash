@@ -60,6 +60,25 @@ curl -X 'POST' \
 
 ---
 
+## 🌐 Deployment (Render)
+
+This project is ready to be deployed on **Render.com**.
+
+### 1. Simple Deploy
+1. Create a new **Web Service** on Render.
+2. Connect your GitHub repository.
+3. Use the following settings:
+   - **Environment**: `Python 3`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+
+### 2. Note on Persistence
+Since this uses SQLite, the database (`laundry.db`) will reset on every redeploy when using Render's free tier. For persistent storage in production, you can:
+- Use a Render **Disk** (requires a paid plan).
+- Or switch the database URL to a managed **PostgreSQL** instance in `database.py`.
+
+---
+
 ## 🏗️ Project Structure
 ```
 laundry-order-system/
