@@ -263,11 +263,29 @@
     </div>
 
     <script>
-        const API_URL = ''; // Relative to the server
+        let authHeader = null;
+
+        async function fetchWithAuth(url, options = {}) {
+            if (authHeader) {
+                options.headers = { ...options.headers, 'Authorization': authHeader };
+            }
+            let res = await fetch(url, options);
+            
+            if (res.status === 401) {
+                const user = prompt("Admin Username:");
+                const pass = prompt("Admin Password:");
+                if (user && pass) {
+                    authHeader = 'Basic ' + btoa(user + ':' + pass);
+                    return fetchWithAuth(url, options);
+                }
+            }
+            return res;
+        }
 
         async function fetchDashboard() {
             try {
-                const res = await fetch('/dashboard');
+                const res = await fetchWithAuth('/dashboard');
+                if (!res.ok) return;
                 const data = await res.json();
                 document.getElementById('stat-total-orders').innerText = data.total_orders;
                 document.getElementById('stat-revenue').innerText = '₹' + data.total_revenue;

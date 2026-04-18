@@ -6,13 +6,19 @@ A lightweight FastAPI-driven order management system for a small dry cleaning bu
 
 1. **Install Dependencies**:
    ```bash
-   pip install -r requirements.txt
+   pip install fastapi uvicorn[standard] sqlalchemy pydantic
    ```
+   *(Or use `pip install -r requirements.txt`)*
 
 2. **Run the Application**:
    ```bash
    uvicorn main:app --reload
    ```
+
+3. **Admin Credentials**:
+   - **Username**: `admin`
+   - **Password**: `password123`
+   (Required for Dashboard and Status Updates)
 
 3. **API Documentation**:
    Once the server is running, visit: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
@@ -21,7 +27,9 @@ A lightweight FastAPI-driven order management system for a small dry cleaning bu
 
 ## ✅ Features Implemented
 
-- [x] **New: Dashboard UI (Included!)**: A high-end single-page dashboard with Dark Mode and Glassmorphism for better visualization.
+- [x] **New: Dashboard UI (Included!)**: A high-end single-page dashboard with Dark Mode and Glassmorphism.
+- [x] **New: Persistence (SQLite)**: Data is saved to `laundry.db` (No more data loss on restart!).
+- [x] **New: Basic Authentication**: Management endpoints and Dashboard are secured (Admin: `admin`/`password123`).
 - [x] **Create Order (POST `/orders`)**: Auto-calculates total bill, generates UUID, and sets "RECEIVED" status.
 - [x] **Update Order Status (PATCH `/orders/{id}/status`)**: Validates status transitions and handles business logic.
 - [x] **View Orders (GET `/orders`)**: Filter by status, customer name (partial), phone (partial), or garment type (bonus).
